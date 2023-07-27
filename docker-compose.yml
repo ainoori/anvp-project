@@ -1,0 +1,50 @@
+version: "3.8"
+services: 
+  anvpdb:
+    build:
+      context: ./Docker-files/db
+    image: an27/anvpdb
+    container_name: anvpdb
+    ports:
+      - "3306:3306"
+    volumes: 
+      - anvpdbdata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=anvpdbpass
+  
+  anvpcache01:
+    image: memcached
+    ports:
+      - "11211:11211"
+
+  anvprmq01:
+    image: rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  
+  anvpapp:
+    build:
+      context: ./Docker-files/app
+    image: an27/anvpapp
+    container_name: anvpapp
+    ports:
+      - "8080:8080"
+    volumes: 
+      - anvpappdata:/usr/local/tomcat/webapps
+    
+  anvpweb:
+    build:
+      context: ./Docker-files/web
+    image: an27/anvpweb
+    container_name: anvpweb
+    ports:
+      - "80:80"
+    volumes: 
+      - anvpappdata:/usr/local/tomcat/webapps
+
+volumes:
+  anvpappdata: {}
+  anvpappdata: {}
