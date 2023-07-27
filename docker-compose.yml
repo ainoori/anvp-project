@@ -45,5 +45,5 @@ services:
     
 
 volumes:
-  anvpappdata: {}
+  anvpdbdata: {}
   anvpappdata: {}
