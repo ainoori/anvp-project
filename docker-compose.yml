@@ -42,8 +42,7 @@ services:
     container_name: anvpweb
     ports:
       - "80:80"
-    volumes: 
-      - anvpappdata:/usr/local/tomcat/webapps
+    
 
 volumes:
   anvpappdata: {}
